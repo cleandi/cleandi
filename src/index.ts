@@ -1,11 +1,11 @@
 import {DependencyBuilderImplementation} from "./builderImplementation";
 import {AsyncDependencyBuilder, ConstructorOptions, DependencyBuilder, FunctionOptions} from "./types";
 
-export function builder<T extends object = never>(): T extends never ? never : DependencyBuilder<T> {
+export function builder<T>(): DependencyBuilder<T> {
     return new DependencyBuilderImplementation(false) as any;
 }
 
-export function asyncBuilder<T extends object = never>(): T extends never ? never : AsyncDependencyBuilder<T> {
+export function asyncBuilder<T>(): AsyncDependencyBuilder<T> {
     return new DependencyBuilderImplementation(true) as any;
 }
 

@@ -156,44 +156,9 @@
         "signature": "89bf2b7a601b73ea4311eda9c41f86a58994fec1bee3b87c4a14d68d9adcdcbd",
         "affectsGlobalScope": true
       },
-      "./dist/types/src/types.d.ts": {
-        "version": "f284e8ccd3418820f2d32846d3d953c91e32d1644b856175403d1f19af064060",
-        "signature": "f284e8ccd3418820f2d32846d3d953c91e32d1644b856175403d1f19af064060",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/src/polyfills.d.ts": {
-        "version": "f8250fd4c89e0a75e2a05a31b9dc8c72db5d2874aaf6ddf8bd75948356098fc8",
-        "signature": "f8250fd4c89e0a75e2a05a31b9dc8c72db5d2874aaf6ddf8bd75948356098fc8",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/src/builderimplementation.d.ts": {
-        "version": "57ba59154cc535f1b90ade91e3c630563234e93d97cf1932968ff7b41251352b",
-        "signature": "57ba59154cc535f1b90ade91e3c630563234e93d97cf1932968ff7b41251352b",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/src/dependencyconstructors.d.ts": {
-        "version": "be0f53e83f237d5d8dec0bd3da8e5839bb67f443b6f52bd4a7ab6db4f5bea40a",
-        "signature": "be0f53e83f237d5d8dec0bd3da8e5839bb67f443b6f52bd4a7ab6db4f5bea40a",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/src/index.d.ts": {
-        "version": "56baf316f9fe598497d9370cb66ee6d724a700dc4d8b0bd97a752fbc77a7746d",
-        "signature": "56baf316f9fe598497d9370cb66ee6d724a700dc4d8b0bd97a752fbc77a7746d",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/src/playground.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/unit_tests/playground.test.d.ts": {
-        "version": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
       "./src/types.ts": {
-        "version": "e049c78d21d947a86846085d2ebb41f805f6218d553acd0d62fcd2db41784812",
-        "signature": "f284e8ccd3418820f2d32846d3d953c91e32d1644b856175403d1f19af064060",
+        "version": "b7cc8a1e6ea49ee26e015c8eb120c243561e21f78265e71aa2065aa3db34e3a6",
+        "signature": "b1dfbb0c2d7e274fd77ad69ffec1d526ef3c6778538fbd8d3210e6d09399ffbb",
         "affectsGlobalScope": false
       },
       "./src/polyfills.ts": {
@@ -202,23 +167,18 @@
         "affectsGlobalScope": false
       },
       "./src/dependencyconstructors.ts": {
-        "version": "3ee3cf841a3ab49305b542e2091cbbcfd4bcbd8f291801977ceeb173b2267d6f",
+        "version": "9f486199afbc915916eb4a78055ebeb8b8b4a93bbfd79e4c4dcdcd46c5d60db3",
         "signature": "be0f53e83f237d5d8dec0bd3da8e5839bb67f443b6f52bd4a7ab6db4f5bea40a",
         "affectsGlobalScope": false
       },
       "./src/builderimplementation.ts": {
-        "version": "a13de6203c25f6ccd9a95c5328667e65b2c70c1db3494d08c5f3d4daf12dcd48",
-        "signature": "57ba59154cc535f1b90ade91e3c630563234e93d97cf1932968ff7b41251352b",
+        "version": "2267129cbca49203bcdb3918aa96e230d6323339c7aad4f51fc867551b5714a9",
+        "signature": "f3c8aec2442ebd2ce21a3e30230fd0a8da90aedf1faa6f6edd73a56d950be9ff",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "41b3ce540df0920022902aedd2748ea1e7389444e3d02df52d8051207350d847",
-        "signature": "56baf316f9fe598497d9370cb66ee6d724a700dc4d8b0bd97a752fbc77a7746d",
-        "affectsGlobalScope": false
-      },
-      "./src/playground.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "e1cd26b872c72bd09443cd8b29c9c523a634d83c304b8f015da3837f8b57fb7d",
+        "signature": "4eae95ebe67b4080f105d7df8fc9879e59a31be60839707db38671c7732e3fde",
         "affectsGlobalScope": false
       },
       "./node_modules/@babel/types/lib/index.d.ts": {
@@ -615,23 +575,13 @@
       "alwaysStrict": true,
       "noUnusedLocals": true,
       "noImplicitReturns": true,
+      "moduleResolution": 2,
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
-      "noEmit": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
-      "./dist/types/src/builderimplementation.d.ts": [
-        "./dist/types/src/polyfills.d.ts",
-        "./dist/types/src/types.d.ts"
-      ],
-      "./dist/types/src/dependencyconstructors.d.ts": [
-        "./dist/types/src/types.d.ts"
-      ],
-      "./dist/types/src/index.d.ts": [
-        "./dist/types/src/types.d.ts"
-      ],
       "./node_modules/@babel/parser/typings/babel-parser.d.ts": [
         "./node_modules/@babel/types/lib/index.d.ts"
       ],
@@ -877,16 +827,6 @@
       ]
     },
     "exportedModulesMap": {
-      "./dist/types/src/builderimplementation.d.ts": [
-        "./dist/types/src/polyfills.d.ts",
-        "./dist/types/src/types.d.ts"
-      ],
-      "./dist/types/src/dependencyconstructors.d.ts": [
-        "./dist/types/src/types.d.ts"
-      ],
-      "./dist/types/src/index.d.ts": [
-        "./dist/types/src/types.d.ts"
-      ],
       "./node_modules/@babel/parser/typings/babel-parser.d.ts": [
         "./node_modules/@babel/types/lib/index.d.ts"
       ],
@@ -1129,13 +1069,6 @@
       ]
     },
     "semanticDiagnosticsPerFile": [
-      "./dist/types/src/builderimplementation.d.ts",
-      "./dist/types/src/dependencyconstructors.d.ts",
-      "./dist/types/src/index.d.ts",
-      "./dist/types/src/playground.d.ts",
-      "./dist/types/src/polyfills.d.ts",
-      "./dist/types/src/types.d.ts",
-      "./dist/types/unit_tests/playground.test.d.ts",
       "./node_modules/@babel/parser/typings/babel-parser.d.ts",
       "./node_modules/@babel/types/lib/index.d.ts",
       "./node_modules/@types/babel__core/index.d.ts",
@@ -1245,387 +1178,8 @@
       "./src/builderimplementation.ts",
       "./src/dependencyconstructors.ts",
       "./src/index.ts",
-      "./src/playground.ts",
       "./src/polyfills.ts",
       "./src/types.ts"
-    ],
-    "affectedFilesPendingEmit": [
-      [
-        "./dist/types/src/builderimplementation.d.ts",
-        1
-      ],
-      [
-        "./dist/types/src/dependencyconstructors.d.ts",
-        1
-      ],
-      [
-        "./dist/types/src/index.d.ts",
-        1
-      ],
-      [
-        "./dist/types/src/playground.d.ts",
-        1
-      ],
-      [
-        "./dist/types/src/polyfills.d.ts",
-        1
-      ],
-      [
-        "./dist/types/src/types.d.ts",
-        1
-      ],
-      [
-        "./dist/types/unit_tests/playground.test.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@babel/parser/typings/babel-parser.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@babel/types/lib/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/babel__core/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/babel__generator/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/babel__template/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/babel__traverse/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/eslint-scope/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/eslint/helpers.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/eslint/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/estree/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/graceful-fs/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/istanbul-lib-coverage/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/istanbul-lib-report/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/istanbul-reports/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/jest/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/json-schema/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/assert.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/async_hooks.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/base.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/buffer.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/child_process.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/cluster.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/console.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/constants.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/crypto.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/dgram.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/dns.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/domain.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/events.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/fs.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/fs/promises.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/globals.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/globals.global.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/http.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/http2.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/https.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/inspector.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/module.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/net.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/os.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/path.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/perf_hooks.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/process.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/punycode.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/querystring.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/readline.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/repl.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/stream.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/string_decoder.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/timers.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/tls.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/trace_events.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/ts3.4/base.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/ts3.6/base.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/tty.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/url.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/util.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/v8.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/vm.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/wasi.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/worker_threads.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/node/zlib.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/normalize-package-data/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/prettier/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/stack-utils/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/yargs-parser/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/@types/yargs/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        1
-      ],
-      [
-        "./node_modules/jest-diff/build/difflines.d.ts",
-        1
-      ],
-      [
-        "./node_modules/jest-diff/build/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/jest-diff/build/printdiffs.d.ts",
-        1
-      ],
-      [
-        "./node_modules/jest-diff/build/types.d.ts",
-        1
-      ],
-      [
-        "./node_modules/pretty-format/build/index.d.ts",
-        1
-      ],
-      [
-        "./node_modules/pretty-format/build/types.d.ts",
-        1
-      ],
-      [
-        "./node_modules/typescript/lib/lib.d.ts",
-        1
-      ],
-      [
-        "./node_modules/typescript/lib/lib.es2015.d.ts",
-        1
-      ],
-      [
-        "./node_modules/typescript/lib/lib.es2016.d.ts",
-        1
-      ],
-      [
-        "./node_modules/typescript/lib/lib.es2017.d.ts",
-        1
-      ],
-      [
-        "./node_modules/typescript/lib/lib.es2018.d.ts",
-        1
-      ],
-      [
-        "./src/builderimplementation.ts",
-        1
-      ],
-      [
-        "./src/dependencyconstructors.ts",
-        1
-      ],
-      [
-        "./src/index.ts",
-        1
-      ],
-      [
-        "./src/playground.ts",
-        1
-      ],
-      [
-        "./src/polyfills.ts",
-        1
-      ],
-      [
-        "./src/types.ts",
-        1
-      ],
-      [
-        "./unit_tests/playground.test.ts",
-        1
-      ]
     ]
   },
   "version": "4.0.3"
