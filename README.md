@@ -1,4 +1,4 @@
-Clean DI is a truly lightweight, type-safe and easy to use dependency injection container.
+Clean DI is a type-safe, lightweight and easy to use dependency injection container.
 It comes in sync and async flavours and allows you to create dependency providers from class constructors, functions and plain values.
 
 The main selling points of this library are:
