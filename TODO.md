@@ -1,0 +1,2 @@
+bindValue and bindAsyncValue with copy parameter to deep copy the object
+intercept(key: string, d: T[key] => T[key] | void) para que puedas alterar una dependencia antes de recibirla mediante p.d o logear algo
