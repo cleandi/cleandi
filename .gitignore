@@ -2,3 +2,5 @@ npm_cache/
 node_modules/
 .idea/
 dist/
+tsconfig.tsbuildinfo
+*.tsbuildinfo

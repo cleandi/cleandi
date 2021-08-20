@@ -1,9 +1,16 @@
 {
   "name": "cleandi",
-  "version": "5.0.13",
-  "description": "",
+  "version": "7.0.1",
+  "description": "Type safe and clean dependency injector",
   "main": "./dist/index.js",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/module.mjs",
+      "node": "./dist/index.js",
+      "default": "./dist/module.mjs"
+    }
+  },
   "types": "./dist/types/index.d.ts",
   "typesVersions": {
     "*": {
@@ -18,7 +25,7 @@
     "test": "npm run type-test && npm run unit-test",
     "unit-test": "npx jest --config unit_tests/jest.config.js",
     "type-test": "node type_tests/runner.js",
-    "build": "npm run clean && npx webpack --mode production",
+    "build": "npm run clean && npx webpack --mode production && cp module.mjs dist/",
     "compile": "npx tsc --noEmit"
   },
   "author": "ritmos",
