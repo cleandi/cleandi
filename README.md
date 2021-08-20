@@ -77,7 +77,9 @@ async function getDataFromDb() {
 
 There were more than 2000 dependency injection libraries and frameworks in npmjs before starting this project, so why make one more?  
 This library is my own take on Dependency Injection after reviewing the state of the art and  tries to be as much typesafe as possible without lossing other important goals which are:
-Original dependency code doesn't need a change
-The dependencies are typesafe and scalable enough
-The library relies on a small runtime check appart from types which ensures the dependencies are right. This was the better solution I have found to keep the library as typesafe, scalable and simple as possible.
+
+- Original dependency code doesn't need to be modified
+- The dependencies are typesafe and scalable enough
+
+The library relies on a small runtime check apart from types which ensures the dependencies are right. This was the better solution I have found to keep the library as typesafe, scalable and simple as possible.
 
