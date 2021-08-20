@@ -1,19 +1,17 @@
 {
   "name": "cleandi",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "",
-  "main": "dist/index.js",
-  "exports": {
-    "./": "dist/index.js"
-  },
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
   "typesVersions": {
     "*": {
-      "*": ["dist/types/*"]
+      "*": ["./dist/types/*"]
     }
   },
   "files": [
-    "dist/"
+    "./dist/"
   ],
   "scripts": {
     "clean": "npx rimraf dist",
