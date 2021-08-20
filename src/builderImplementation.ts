@@ -85,7 +85,7 @@ export class DependencyBuilderImplementation {
 
     build(key: string, ...keys: string[]) {
 
-        const allKeys = [key, ...keys];
+        const allKeys = this.getKeysOrThrow(key, keys);
         this.throwIfDuplicated(allKeys);
         this.throwIfMissingBindings(allKeys);
 
@@ -139,6 +139,12 @@ export class DependencyBuilderImplementation {
         });
 
         return dependencyBox;
+    }
+
+    private getKeysOrThrow(key: string, keys: string[]) {
+        if (key == null)
+            throw 'arguments must be provided when calling build';
+        return [key, ...keys];
     }
 
     private throwIfDuplicated(keys: string[]) {
