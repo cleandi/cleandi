@@ -1,5 +1,5 @@
-import {C0, C1, C2, C3, F0, TF0} from "../unit_tests/testUtils";
-import {asyncBuilder, builder, none} from "../src";
+import {C0, C1, F0} from "../unit_tests/testUtils";
+import {asyncBuilder, builder} from "../src";
 
 
 describe('Types', () => {
@@ -70,7 +70,7 @@ describe('Types', () => {
 
     it ('unknown function dependencies should not be allowed to bind', () => {
         interface T {
-            a: TF0;
+            a: string;
         }
         const p = builder<T>()
             .bindFunction('b', F0, () => [] as const) // @ts-error
@@ -78,7 +78,7 @@ describe('Types', () => {
 
     it ('unknown function dependencies should not be allowed to bind for async builder', () => {
         interface T {
-            a: TF0;
+            a: string;
         }
         const p = asyncBuilder<T>()
             .bindFunction('b', F0, () => [] as const) // @ts-error
