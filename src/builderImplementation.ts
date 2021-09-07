@@ -4,7 +4,7 @@ import {
     DepedencyConstructor,
     FunctionOptions,
     FunctionWithReturnType,
-    PartialDependencyConstructor, DependencyMapper
+    PartialDependencyConstructor, DependencyMiddleware
 } from "./types";
 import {StringSet} from "./polyfills";
 import {
@@ -20,7 +20,7 @@ export class DependencyBuilderImplementation {
 
     boundNames = new StringSet();
     constructors: {[keys: string]: DepedencyConstructor} = {};
-    mappers: {[keys: string]: DependencyMapper[]} = {};
+    onRequestMiddleware: {[keys: string]: DependencyMiddleware[]} = {};
 
     constructor(readonly inAsyncMode: boolean) {
     }
@@ -84,14 +84,16 @@ export class DependencyBuilderImplementation {
         return this;
     }
 
-    map(item: string, mapper: (item: any) => any) {
+    onRequest(item: string, handler: (item: any) => any) {
 
-        const di: DependencyMapper = {
+        const di: DependencyMiddleware = {
             name: item,
-            map: mapper
+            handler: handler
         };
 
-        this.mappers[item] ? this.mappers[item].push(di) : this.mappers[item] = [di];
+        this.onRequestMiddleware[item]
+            ? this.onRequestMiddleware[item].push(di)
+            : this.onRequestMiddleware[item] = [di];
 
         return this;
     }
@@ -156,9 +158,9 @@ export class DependencyBuilderImplementation {
     }
 
     private createSyncDependencyGetter(key: string) {
-        if (this.mappers[key]) {
-            const len = this.mappers[key].length;
-            const map = this.mappers[key].map(i => i.map);
+        if (this.onRequestMiddleware[key]) {
+            const len = this.onRequestMiddleware[key].length;
+            const map = this.onRequestMiddleware[key].map(i => i.handler);
             return () => {
                 let item = this.constructors[key].get();
                 for (let j = 0; j < len; j++) {
@@ -171,9 +173,9 @@ export class DependencyBuilderImplementation {
     }
 
     private createAsyncDependencyGetter(key: string) {
-        if (this.mappers[key]) {
-            const len = this.mappers[key].length;
-            const map = this.mappers[key].map(i => i.map);
+        if (this.onRequestMiddleware[key]) {
+            const len = this.onRequestMiddleware[key].length;
+            const map = this.onRequestMiddleware[key].map(i => i.handler);
             return async () => {
                 let item = await this.constructors[key].getAsync();
                 for (let j = 0; j < len; j++) {
@@ -210,7 +212,7 @@ export class DependencyBuilderImplementation {
     }
 
     private throwIfUnknownMappers() {
-        Object.keys(this.mappers).forEach(name => {
+        Object.keys(this.onRequestMiddleware).forEach(name => {
             if (!this.boundNames.has(name)) throw `${name} mapper is unknown`;
         });
     }

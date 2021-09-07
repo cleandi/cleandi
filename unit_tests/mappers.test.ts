@@ -10,7 +10,7 @@ describe('Mappers', () => {
         const t = () => {
             const p = builder<T>()
                 .bindValue('a', 1)
-                .map('b' as 'a', item => item)
+                .onRequest('b' as 'a', item => item)
                 .build('a');
         }
 
@@ -24,8 +24,8 @@ describe('Mappers', () => {
 
         const p = builder<T>()
             .bindValue('a', 1)
-            .map('a', item => item + 1)
-            .map('a', item => item * 3)
+            .onRequest('a', item => item + 1)
+            .onRequest('a', item => item * 3)
             .build('a');
 
         expect(p.a).toBe(6);
@@ -38,8 +38,8 @@ describe('Mappers', () => {
 
         const p = builder<T>()
             .bindValue('a', 1)
-            .map('a', item => item * 3)
-            .map('a', item => item + 1)
+            .onRequest('a', item => item * 3)
+            .onRequest('a', item => item + 1)
             .build('a');
 
         expect(p.a).toBe(4);
@@ -52,8 +52,8 @@ describe('Mappers', () => {
 
         const p = asyncBuilder<T>()
             .bindValue('a', 1)
-            .map('a', item => item + 1)
-            .map('a', item => item * 3)
+            .onRequest('a', item => item + 1)
+            .onRequest('a', item => item * 3)
             .build('a');
 
         expect(await p.a).toBe(6);
