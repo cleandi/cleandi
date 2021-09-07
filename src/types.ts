@@ -49,7 +49,9 @@ export type DependencyBuilder<T> = {
 
     bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): DependencyBuilder<T>;
 
-    build<C extends string & keyof T>(key: C, ...keys: C[]): HasMissingKeys<T, C> extends true ? never : DependencyProvider<T>;
+    map<K extends keyof T>(item: K, mapper: (item: T[K]) => T[K]): DependencyBuilder<T>;
+
+    build<C extends string & keyof T>(key: C, ...keys: C[]): HasMissingKeys<T, C> extends true ? void : DependencyProvider<T>;
 }
 
 export type AsyncDependencyBuilder<T> = {
@@ -64,7 +66,9 @@ export type AsyncDependencyBuilder<T> = {
 
     bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): AsyncDependencyBuilder<T>;
 
-    build<C extends string & keyof T>(key: C, ...keys: C[]): HasMissingKeys<T, C> extends true ? never : AsyncDependencyProvider<T>;
+    map<K extends keyof T>(item: K, mapper: (item: T[K]) => T[K]): AsyncDependencyBuilder<T>;
+
+    build<C extends string & keyof T>(key: C, ...keys: C[]): HasMissingKeys<T, C> extends true ? void : AsyncDependencyProvider<T>;
 }
 
 export interface DepedencyConstructor {
@@ -81,4 +85,11 @@ export interface PartialDependencyConstructor extends DepedencyConstructor {
     getArgs(args: any): DepedencyConstructor[];
 
     toDependencyConstructor(args: DepedencyConstructor[]): DepedencyConstructor;
+}
+
+export interface DependencyMapper {
+
+    readonly name: string;
+
+    map: (item: any) => any;
 }

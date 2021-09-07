@@ -168,4 +168,26 @@ describe('Types', () => {
             .build('b') // @ts-error
     });
 
+    it ('mapping unknown dependencies should be not allowed', () => {
+        interface T {
+            a: number;
+        }
+
+        const p = builder<T>()
+            .bindValue('a', 1)
+            .map('b', item => item)  // @ts-error
+            .build('a');
+    });
+
+    it ('mapping with a wrong return type should not be allowed', () => {
+        interface T {
+            a: number;
+        }
+
+        const p = builder<T>()
+            .bindValue('a', 1)
+            .map('a', item => true)  // @ts-error
+            .build('a');
+    });
+
 });

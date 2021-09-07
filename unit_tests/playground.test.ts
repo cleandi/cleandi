@@ -76,6 +76,7 @@ describe('noseque', () => {
             .bindConstructor('c', C, d => [] as const)
             .bindConstructor('b', B, d => [d.c] as const)
             .bindValue('num', 1)
+            .map('a', item => item)
             .build('a', 'b', 'c', 'num');
 
         const val = p.a.val();

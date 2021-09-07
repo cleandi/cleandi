@@ -4,7 +4,7 @@ import {
     DepedencyConstructor,
     FunctionOptions,
     FunctionWithReturnType,
-    PartialDependencyConstructor
+    PartialDependencyConstructor, DependencyMapper
 } from "./types";
 import {StringSet} from "./polyfills";
 import {
@@ -20,7 +20,8 @@ export class DependencyBuilderImplementation {
 
     boundNames = new StringSet();
     constructors: {[keys: string]: DepedencyConstructor} = {};
-    
+    mappers: {[keys: string]: DependencyMapper[]} = {};
+
     constructor(readonly inAsyncMode: boolean) {
     }
 
@@ -83,11 +84,24 @@ export class DependencyBuilderImplementation {
         return this;
     }
 
+    map(item: string, mapper: (item: any) => any) {
+
+        const di: DependencyMapper = {
+            name: item,
+            map: mapper
+        };
+
+        this.mappers[item] ? this.mappers[item].push(di) : this.mappers[item] = [di];
+
+        return this;
+    }
+
     build(key: string, ...keys: string[]) {
 
         const allKeys = this.getKeysOrThrow(key, keys);
         this.throwIfDuplicated(allKeys);
         this.throwIfMissingBindings(allKeys);
+        this.throwIfUnknownMappers();
 
         this.resolvePartialConstructorsOrThrow();
 
@@ -122,8 +136,8 @@ export class DependencyBuilderImplementation {
         const dependencyBox = {};
 
         const createGetter = this.inAsyncMode
-            ? (key: string) => () => this.constructors[key].getAsync()
-            : (key: string) => () => this.constructors[key].get();
+            ? (key: string) => this.createAsyncDependencyGetter(key)
+            : (key: string) => this.createSyncDependencyGetter(key);
 
         Object.keys(this.constructors).forEach(key => {
             Object.defineProperty(dependencyBox, key, {
@@ -139,6 +153,36 @@ export class DependencyBuilderImplementation {
         });
 
         return dependencyBox;
+    }
+
+    private createSyncDependencyGetter(key: string) {
+        if (this.mappers[key]) {
+            const len = this.mappers[key].length;
+            const map = this.mappers[key].map(i => i.map);
+            return () => {
+                let item = this.constructors[key].get();
+                for (let j = 0; j < len; j++) {
+                    item = map[j](item);
+                }
+                return item;
+            }
+        }
+        return () => this.constructors[key].get();
+    }
+
+    private createAsyncDependencyGetter(key: string) {
+        if (this.mappers[key]) {
+            const len = this.mappers[key].length;
+            const map = this.mappers[key].map(i => i.map);
+            return async () => {
+                let item = await this.constructors[key].getAsync();
+                for (let j = 0; j < len; j++) {
+                    item = map[j](item);
+                }
+                return item;
+            }
+        }
+        return () => this.constructors[key].getAsync();
     }
 
     private getKeysOrThrow(key: string, keys: string[]) {
@@ -163,6 +207,12 @@ export class DependencyBuilderImplementation {
 
         if (missingBindings.length === 1) throw `${missingBindings[0]} binding is not defined`;
         if (missingBindings.length > 1) throw `${missingBindings.join(', ')} bindings are not defined.`;
+    }
+
+    private throwIfUnknownMappers() {
+        Object.keys(this.mappers).forEach(name => {
+            if (!this.boundNames.has(name)) throw `${name} mapper is unknown`;
+        });
     }
 
     private throwIfNameAlreadyBound(name: string) {
