@@ -13,37 +13,32 @@ The main selling points of this library are:
  - you can also use it vanilla js (no types), although you won't get the full features
 
 ```
-// sync provider example
 import {builder} from 'cleandi';
 
 const provider = builder<Provider>
-    .bindConstructor('car', Mercedes, d => [d.wheels, d.pilot] as const)
-    .bindFunction('pilot', getPilot)
-    .bindValue('wheels', 4)
-    .build('car', 'pilot', 'wheels');
-    
-console.log(provider.car.drive()); 
+    .bindConstructor('clock', Clock, d => [d.clockName, d.startingTime] as const)
+    .bindFunction('startingTime', getNow, none)
+    .bindValue('clockName', 'my-clock')
+    .build('clock', 'startingTime', 'clockName');
 
-interface Car {
-    drive();
-}
-
-class Mercedes implements Car {
-    constructor(private wheels: number, private pilot: string) {}
-    drive() {
-        return `Here it goes the Mercedes with ${this.wheels} wheels, driven by ${this.pilot}`;
-    }
-}
-
-function getPilot() {
-    return 'John Smith';
-}
+const time = provider.clock.time();
 
 interface Provider {
-    car: Car,
-    pilot: name,
-    wheels: number
+ clock: IClock;
+ clockName: string;
+ startingTime: Date;
 }
+
+interface IClock {
+ time(): Date;
+}
+
+class Clock implements IClock {
+ constructor(name, startingTime) {...}
+ time() {...}
+}
+
+function getNow() {...}
 
 ```
 
