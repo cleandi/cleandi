@@ -22,4 +22,7 @@ module.exports = {
         umdNamedDefine: true,
         globalObject: 'this'
     },
+    optimization: {
+        minimize: true
+    }
 };
