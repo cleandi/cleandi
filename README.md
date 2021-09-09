@@ -10,7 +10,7 @@ The main selling points of this library are:
  - testable, because calling build() checks your dependency tree without side effects
  - very small in bundle size and very fast in execution
  - can work in async fashion too
- - you can also use it vanilla js (no types), although you won't get the full features
+ - you can also use it vanilla js, although you won't get type safety
 
 ```
 import {builder} from 'cleandi';
@@ -56,17 +56,14 @@ const provider = asyncBuilder<Provider>
     .bindValue('logger', console.log)
     .build('data', 'logger');
     
-await provider.logger
+await provider.logger(await provider.data);
     
 interface Provider {
     logger: (msg: string) => void;
     data: string;
 }
 
-async function getDataFromDb() {
-    // some operations in a dbf
-    await result;
-}
+async function getDataFromDb() {...}
 
 ```
 
