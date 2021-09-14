@@ -13,7 +13,7 @@ The main selling points of this library are:
  - you can also use it vanilla js, although you won't get type safety
 
 ```
-import {builder} from 'cleandi';
+import {builder, none} from 'cleandi';
 
 const provider = builder<Provider>
     .bindConstructor('clock', Clock, d => [d.clockName, d.startingTime] as const)
@@ -34,7 +34,7 @@ interface IClock {
 }
 
 class Clock implements IClock {
- constructor(name, startingTime) {...}
+ constructor(name: string, startingTime: Date) {...}
  time() {...}
 }
 
