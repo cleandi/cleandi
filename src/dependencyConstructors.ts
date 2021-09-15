@@ -1,4 +1,4 @@
-import {Constructor, DepedencyConstructor, PartialDependencyConstructor} from "./types";
+import {Class, DependencyConstructor, PartialDependencyConstructor} from "./types";
 import {PromiseUtils} from "./polyfills";
 
 
@@ -14,7 +14,7 @@ export class DependencyConstructorUtils {
             v instanceof PartialAsyncFunctionDependencyConstructor;
     }
 
-    static isAnyConstructorInstance(v: any): v is DepedencyConstructor {
+    static isAnyConstructorInstance(v: any): v is DependencyConstructor {
         return v instanceof PartialClassDependencyConstructor ||
             v instanceof PartialFunctionDependencyConstructor ||
             v instanceof PartialAsyncFunctionDependencyConstructor ||
@@ -40,8 +40,8 @@ export class PartialClassDependencyConstructor implements PartialDependencyConst
 
     constructor(
         readonly name: string,
-        readonly ctor: Constructor,
-        readonly argsBuilder: (args: any) => DepedencyConstructor[],
+        readonly cls: Class<any>,
+        readonly argsBuilder: (args: any) => DependencyConstructor[],
         readonly singleton?: boolean
     ) {
     }
@@ -54,12 +54,12 @@ export class PartialClassDependencyConstructor implements PartialDependencyConst
         throw GetPartialThrowMessage;
     }
 
-    getArgs(args: any): DepedencyConstructor[] {
+    getArgs(args: any): DependencyConstructor[] {
         return this.argsBuilder(args);
     }
 
-    toDependencyConstructor(args: DepedencyConstructor[]): DepedencyConstructor {
-        return new ClassDependencyConstructor(this.name, this.ctor, args, this.singleton);
+    toDependencyConstructor(args: DependencyConstructor[]): DependencyConstructor {
+        return new ClassDependencyConstructor(this.name, this.cls, args, this.singleton);
     }
 }
 
@@ -68,7 +68,7 @@ export class PartialFunctionDependencyConstructor implements PartialDependencyCo
     constructor(
         readonly name: string,
         readonly fn: Function,
-        readonly argsBuilder: (args: any) => DepedencyConstructor[],
+        readonly argsBuilder: (args: any) => DependencyConstructor[],
         readonly memoize?: boolean
     ) {
     }
@@ -81,11 +81,11 @@ export class PartialFunctionDependencyConstructor implements PartialDependencyCo
         throw GetPartialThrowMessage;
     }
 
-    getArgs(args: any): DepedencyConstructor[] {
+    getArgs(args: any): DependencyConstructor[] {
         return this.argsBuilder(args);
     }
 
-    toDependencyConstructor(args: DepedencyConstructor[]): DepedencyConstructor {
+    toDependencyConstructor(args: DependencyConstructor[]): DependencyConstructor {
         return new FunctionDependencyConstructor(this.name, this.fn, args, this.memoize);
     }
 }
@@ -95,7 +95,7 @@ export class PartialAsyncFunctionDependencyConstructor implements PartialDepende
     constructor(
         readonly name: string,
         readonly fn: Function,
-        readonly argsBuilder: (args: any) => DepedencyConstructor[],
+        readonly argsBuilder: (args: any) => DependencyConstructor[],
         readonly memoize?: boolean,
         readonly timeout?: number
     ) {
@@ -109,32 +109,32 @@ export class PartialAsyncFunctionDependencyConstructor implements PartialDepende
         throw GetPartialThrowMessage;
     }
 
-    getArgs(args: any): DepedencyConstructor[] {
+    getArgs(args: any): DependencyConstructor[] {
         return this.argsBuilder(args);
     }
 
-    toDependencyConstructor(args: DepedencyConstructor[]): DepedencyConstructor {
+    toDependencyConstructor(args: DependencyConstructor[]): DependencyConstructor {
         return new AsyncFunctionDependencyConstructor(this.name, this.fn, args, this.memoize, this.timeout);
     }
 }
 
 
 
-export class ClassDependencyConstructor implements DepedencyConstructor {
+export class ClassDependencyConstructor implements DependencyConstructor {
 
     singletonInstance: any = undefined;
 
     constructor(
         readonly name: string,
-        readonly ctor: Constructor,
-        readonly args: DepedencyConstructor[],
+        readonly cls: Class<any>,
+        readonly args: DependencyConstructor[],
         readonly singleton?: boolean
     ) {
     }
 
     newInstance() {
         const resolvedArgs = this.args.map(a => a.get());
-        return new (Function.prototype.bind.apply(this.ctor, [null, ...resolvedArgs]));
+        return new (Function.prototype.bind.apply(this.cls, [null, ...resolvedArgs]));
     }
 
     getSingletonInstance() {
@@ -150,7 +150,7 @@ export class ClassDependencyConstructor implements DepedencyConstructor {
 
     async newInstanceAsync() {
         const resolvedArgs = await Promise.all(this.args.map(a => a.getAsync()))
-        return new (Function.prototype.bind.apply(this.ctor, [null, ...resolvedArgs]));
+        return new (Function.prototype.bind.apply(this.cls, [null, ...resolvedArgs]));
     }
 
     async getSingletonInstanceAsync() {
@@ -166,14 +166,14 @@ export class ClassDependencyConstructor implements DepedencyConstructor {
 }
 
 
-export class FunctionDependencyConstructor implements DepedencyConstructor {
+export class FunctionDependencyConstructor implements DependencyConstructor {
 
     memoizedValue: any = undefined;
 
     constructor(
         readonly name: string,
         readonly fn: Function,
-        readonly args: DepedencyConstructor[],
+        readonly args: DependencyConstructor[],
         readonly memoize?: boolean
     ) {}
 
@@ -210,7 +210,7 @@ export class FunctionDependencyConstructor implements DepedencyConstructor {
     }
 }
 
-export class ValueDependencyConstructor implements DepedencyConstructor {
+export class ValueDependencyConstructor implements DependencyConstructor {
 
     constructor(
         readonly name: string,
@@ -244,7 +244,7 @@ export class ValueDependencyConstructor implements DepedencyConstructor {
     }
 }
 
-export class BoxedValueDependencyConstructor implements DepedencyConstructor {
+export class BoxedValueDependencyConstructor implements DependencyConstructor {
 
     private static counter = 0;
 
@@ -266,7 +266,7 @@ export class BoxedValueDependencyConstructor implements DepedencyConstructor {
 }
 
 
-export class AsyncValueDependencyConstructor implements DepedencyConstructor {
+export class AsyncValueDependencyConstructor implements DependencyConstructor {
 
     constructor(
         readonly name: string,
@@ -285,14 +285,14 @@ export class AsyncValueDependencyConstructor implements DepedencyConstructor {
 }
 
 
-export class AsyncFunctionDependencyConstructor implements DepedencyConstructor {
+export class AsyncFunctionDependencyConstructor implements DependencyConstructor {
 
     memoizedValue: any = undefined;
 
     constructor(
         readonly name: string,
         readonly fn: Function,
-        readonly args: DepedencyConstructor[],
+        readonly args: DependencyConstructor[],
         readonly memoize?: boolean,
         readonly timeout?: number
     ) {}

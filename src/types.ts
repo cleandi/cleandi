@@ -1,5 +1,3 @@
-//export type FunctionWithReturn = (...args: any) => any;
-
 export type FunctionOptions = {
     memoize?: boolean;
 };
@@ -8,21 +6,18 @@ export type AsyncFunctionOptions = FunctionOptions & {
   timeout?: number;
 };
 
-export type ConstructorOptions = {
+export type ClassOptions = {
     singleton?: boolean;
 }
 
-export type FunctionWithReturnType<T> = (...args: any) => T;
+export type Function<T> = (...args: any) => T;
 
-export type NoArgsFunctionWithReturnType<T> = () => T;
+export type NoArgsFunction<T> = () => T;
 
-export type Constructor =
-    new(...args: any[]) => any;
-
-type ConstructorWithReturnType<T> =
+export type Class<T> =
     new(...args: any[]) => T;
 
-type NoArgsConstructorWithReturnType<T> =
+export type NoArgsClass<T> =
     new() => T;
 
 type MissingKeys<T, Keys extends string> =
@@ -31,30 +26,20 @@ type MissingKeys<T, Keys extends string> =
 type HasMissingKeys<T, Keys extends string> =
     MissingKeys<T, Keys> extends never ? false : true;
 
-type DependencyProviderMethods = {
-    //dispose(): void;
-    //onCreate(args: (name: keyof T, item: T[k]))
-    //onRequest
-}
-
-// type FunctionThatReturns<F extends FunctionWithReturn, R> =
-//     ReturnType<F> extends R ? true : false;
-
-type DependencyProvider<T> =
-    T & DependencyProviderMethods;
+type DependencyProvider<T> = T;
 
 type AsyncDependencyProvider<T> =
-    {[K in keyof T]: Promise<T[K]>} & DependencyProviderMethods;
+    {[K in keyof T]: Promise<T[K]>};
 
 export type DependencyBuilder<T> = {
 
     bindValue<K extends keyof T, V extends T[K]>(item: K, value: V): DependencyBuilder<T>;
 
-    bindFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<T[K]>>(item: K, fn: V, options?: FunctionOptions): DependencyBuilder<T>;
-    bindFunction<K extends keyof T, V extends FunctionWithReturnType<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): DependencyBuilder<T>;
+    bindFunction<K extends keyof T, V extends NoArgsFunction<T[K]>>(item: K, fn: V, options?: FunctionOptions): DependencyBuilder<T>;
+    bindFunction<K extends keyof T, V extends Function<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): DependencyBuilder<T>;
 
-    bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): DependencyBuilder<T>;
-    bindConstructor<K extends keyof T, V extends NoArgsConstructorWithReturnType<T[K]>>(item: K, ctor: V, options?: ConstructorOptions): DependencyBuilder<T>;
+    bindClass<K extends keyof T, V extends Class<T[K]>>(item: K, cls: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ClassOptions): DependencyBuilder<T>;
+    bindClass<K extends keyof T, V extends NoArgsClass<T[K]>>(item: K, cls: V, options?: ClassOptions): DependencyBuilder<T>;
 
     onRequest<K extends keyof T>(item: K, handler: (item: T[K]) => T[K]): DependencyBuilder<T>;
 
@@ -67,21 +52,21 @@ export type AsyncDependencyBuilder<T> = {
 
     bindAsyncValue<K extends keyof T, V extends Promise<T[K]>>(item: K, value: V): AsyncDependencyBuilder<T>;
 
-    bindFunction<K extends keyof T, V extends FunctionWithReturnType<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
-    bindFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<T[K]>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindFunction<K extends keyof T, V extends Function<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindFunction<K extends keyof T, V extends NoArgsFunction<T[K]>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
 
-    bindAsyncFunction<K extends keyof T, V extends FunctionWithReturnType<Promise<T[K]>>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
-    bindAsyncFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<Promise<T[K]>>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindAsyncFunction<K extends keyof T, V extends Function<Promise<T[K]>>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindAsyncFunction<K extends keyof T, V extends NoArgsFunction<Promise<T[K]>>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
 
-    bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): AsyncDependencyBuilder<T>;
-    bindConstructor<K extends keyof T, V extends NoArgsConstructorWithReturnType<T[K]>>(item: K, ctor: V, options?: ConstructorOptions): AsyncDependencyBuilder<T>;
+    bindClass<K extends keyof T, V extends Class<T[K]>>(item: K, cls: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ClassOptions): AsyncDependencyBuilder<T>;
+    bindClass<K extends keyof T, V extends NoArgsClass<T[K]>>(item: K, cls: V, options?: ClassOptions): AsyncDependencyBuilder<T>;
 
     onRequest<K extends keyof T>(item: K, handler: (item: T[K]) => T[K]): AsyncDependencyBuilder<T>;
 
     build<C extends string & keyof T>(key: C, ...keys: C[]): HasMissingKeys<T, C> extends true ? void : AsyncDependencyProvider<T>;
 }
 
-export interface DepedencyConstructor {
+export interface DependencyConstructor {
 
     readonly name: string;
 
@@ -90,11 +75,11 @@ export interface DepedencyConstructor {
     getAsync(): Promise<any>;
 }
 
-export interface PartialDependencyConstructor extends DepedencyConstructor {
+export interface PartialDependencyConstructor extends DependencyConstructor {
 
-    getArgs(args: any): DepedencyConstructor[];
+    getArgs(args: any): DependencyConstructor[];
 
-    toDependencyConstructor(args: DepedencyConstructor[]): DepedencyConstructor;
+    toDependencyConstructor(args: DependencyConstructor[]): DependencyConstructor;
 }
 
 export interface DependencyMiddleware {

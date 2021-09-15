@@ -72,9 +72,9 @@ describe('noseque', () => {
         };
 
         const p = builder<basic>()
-            .bindConstructor('a', A, d => [d.b, d.num] as const)
-            .bindConstructor('c', C, d => [] as const)
-            .bindConstructor('b', B, d => [d.c] as const)
+            .bindClass('a', A, d => [d.b, d.num] as const)
+            .bindClass('c', C, d => [] as const)
+            .bindClass('b', B, d => [d.c] as const)
             .bindValue('num', 1)
             .onRequest('a', item => item)
             .build('a', 'b', 'c', 'num');

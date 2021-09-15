@@ -25,7 +25,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = builder<T>()
-            .bindConstructor('a', C1, () => [] as const) // @ts-error
+            .bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed for async builder', () => {
@@ -33,7 +33,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C1, () => [] as const) // @ts-error
+            .bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('unknown constructor dependencies should not be allowed to bind', () => {
@@ -41,7 +41,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = builder<T>()
-            .bindConstructor('b', C1, () => [] as const) // @ts-error
+            .bindClass('b', C1, () => [] as const) // @ts-error
     });
 
     it ('unknown constructor dependencies should not be allowed to bind on async builder', () => {
@@ -49,7 +49,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('b', C1, () => [] as const) // @ts-error
+            .bindClass('b', C1, () => [] as const) // @ts-error
     });
 
     it ('unknown constructor dependencies should not be allowed to bind', () => {
@@ -57,7 +57,7 @@ describe('Types', () => {
             a: C0;
         }
         const p = builder<T>()
-            .bindConstructor('b', C0, () => [] as const) // @ts-error
+            .bindClass('b', C0, () => [] as const) // @ts-error
     });
 
     it ('unknown constructor dependencies should not be allowed to bind for async builder', () => {
@@ -65,7 +65,7 @@ describe('Types', () => {
             a: C0;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('b', C0, () => [] as const) // @ts-error
+            .bindClass('b', C0, () => [] as const) // @ts-error
     });
 
     it ('unknown function dependencies should not be allowed to bind', () => {
@@ -121,7 +121,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = builder<T>()
-            .bindConstructor('a', C1, () => [] as const) // @ts-error
+            .bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed for async builder', () => {
@@ -129,7 +129,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C1, () => [] as const) // @ts-error
+            .bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed', () => {
@@ -137,7 +137,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = builder<T>()
-            .bindConstructor('a', C1, () => [new C0()] as const)
+            .bindClass('a', C1, () => [new C0()] as const)
             .build() // @ts-error
     });
 
@@ -146,7 +146,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C1, () => [new C0()] as const)
+            .bindClass('a', C1, () => [new C0()] as const)
             .build() // @ts-error
     });
 
@@ -155,7 +155,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = builder<T>()
-            .bindConstructor('a', C1, () => [new C0()] as const)
+            .bindClass('a', C1, () => [new C0()] as const)
             .build('b') // @ts-error
     });
 
@@ -164,7 +164,7 @@ describe('Types', () => {
             a: C1;
         }
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C1, () => [new C0()] as const)
+            .bindClass('a', C1, () => [new C0()] as const)
             .build('b') // @ts-error
     });
 

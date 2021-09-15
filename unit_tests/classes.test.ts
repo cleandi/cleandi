@@ -9,7 +9,7 @@ describe('Class provider', () => {
         }
 
         const p = builder<T>()
-            .bindConstructor('a', C0)
+            .bindClass('a', C0)
             .build('a');
 
         expect(p.a.chain()).toBe('C0');
@@ -32,8 +32,8 @@ describe('Class provider', () => {
         }
         const t = () => {
             const p = builder<T>()
-                .bindConstructor('a', C0)
-                .bindConstructor('a', C0)
+                .bindClass('a', C0)
+                .bindClass('a', C0)
                 .build('a');
         }
         expect(t).toThrow('a already bound');
@@ -45,7 +45,7 @@ describe('Class provider', () => {
         }
         const t = () => {
             const p = builder<T>()
-                .bindConstructor('a', C0)
+                .bindClass('a', C0)
                 .build('a', 'a');
         }
         expect(t).toThrow('a argument already provided');
@@ -58,8 +58,8 @@ describe('Class provider', () => {
         }
 
         const p = builder<T>()
-            .bindConstructor('a', C0)
-            .bindConstructor('b', C1, d => [d.a] as const)
+            .bindClass('a', C0)
+            .bindClass('b', C1, d => [d.a] as const)
             .build('a', 'b');
 
         expect(p.b.chain()).toBe('C0-C1');
@@ -73,9 +73,9 @@ describe('Class provider', () => {
         }
 
         const p = builder<T>()
-            .bindConstructor('a', C0)
-            .bindConstructor('b', C1, d => [d.a] as const)
-            .bindConstructor('c', C2, d => [d.a, 555] as const)
+            .bindClass('a', C0)
+            .bindClass('b', C1, d => [d.a] as const)
+            .bindClass('c', C2, d => [d.a, 555] as const)
             .build('a', 'b', 'c');
 
         expect(p.c.chain()).toBe('C0-555-C2');
@@ -90,10 +90,10 @@ describe('Class provider', () => {
         }
 
         const p = builder<T>()
-            .bindConstructor('a', C0)
+            .bindClass('a', C0)
             .bindValue('b', 555)
             .bindValue('c', 'hello')
-            .bindConstructor('d', C3, d => [d.a, d.b, d.c] as const)
+            .bindClass('d', C3, d => [d.a, d.b, d.c] as const)
             .build('a', 'b', 'c', 'd');
 
         expect(p.d.chain()).toBe('C0-555-hello-C3');
@@ -114,7 +114,7 @@ describe('Class provider', () => {
             a: C;
         }
         const p = builder<T>()
-            .bindConstructor('a', C)
+            .bindClass('a', C)
             .build('a');
         expect(p.a.count()).toBe(0);
         expect(p.a.count()).toBe(0);
@@ -137,7 +137,7 @@ describe('Class provider', () => {
             a: C;
         }
         const p = builder<T>()
-            .bindConstructor('a', C, singleton)
+            .bindClass('a', C, singleton)
             .build('a');
         expect(p.a.count()).toBe(0);
         expect(p.a.count()).toBe(1);
@@ -163,8 +163,8 @@ describe('Class provider', () => {
             b: B;
         }
         const p = builder<T>()
-            .bindConstructor('a', A)
-            .bindConstructor('b', B, d => [d.a] as const)
+            .bindClass('a', A)
+            .bindClass('b', B, d => [d.a] as const)
             .build('a', 'b');
 
         expect(aInstantiated).toBeFalsy();

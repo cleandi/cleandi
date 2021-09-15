@@ -9,7 +9,7 @@ describe('Async providers', () => {
         }
 
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C0)
+            .bindClass('a', C0)
             .build('a');
 
         expect((await p.a).chain()).toBe('C0');

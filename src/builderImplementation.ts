@@ -1,9 +1,9 @@
 import {
-    AsyncFunctionOptions, ConstructorOptions,
-    Constructor,
-    DepedencyConstructor,
+    AsyncFunctionOptions, ClassOptions,
+    Class,
+    DependencyConstructor,
     FunctionOptions,
-    FunctionWithReturnType,
+    Function,
     PartialDependencyConstructor, DependencyMiddleware
 } from "./types";
 import {StringSet} from "./polyfills";
@@ -13,13 +13,14 @@ import {
     ValueDependencyConstructor,
     AsyncValueDependencyConstructor,
     PartialFunctionDependencyConstructor,
-    PartialAsyncFunctionDependencyConstructor, BoxedValueDependencyConstructor
+    PartialAsyncFunctionDependencyConstructor,
+    BoxedValueDependencyConstructor
 } from "./dependencyConstructors";
 
 export class DependencyBuilderImplementation {
 
     boundNames = new StringSet();
-    constructors: {[keys: string]: DepedencyConstructor} = {};
+    constructors: {[keys: string]: DependencyConstructor} = {};
     onRequestMiddleware: {[keys: string]: DependencyMiddleware[]} = {};
 
     constructor(readonly inAsyncMode: boolean) {
@@ -74,14 +75,14 @@ export class DependencyBuilderImplementation {
         return this;
     }
 
-    bindConstructor() {
+    bindClass() {
 
-        const args = this.getConstructorArgsOrThrow(arguments) as BindConstructorArgs;
+        const args = this.getClassArgsOrThrow(arguments) as BindClassArgs;
         this.throwIfNameAlreadyBound(args.name);
 
         const singleton = args.options.singleton || false;
 
-        this.constructors[args.name] = new PartialClassDependencyConstructor(args.name, args.ctor, args.args, singleton);
+        this.constructors[args.name] = new PartialClassDependencyConstructor(args.name, args.cls, args.args, singleton);
         this.boundNames.add(args.name);
 
         return this;
@@ -241,14 +242,14 @@ export class DependencyBuilderImplementation {
         }
     }
 
-    private getConstructorArgsOrThrow(args: IArguments) {
+    private getClassArgsOrThrow(args: IArguments) {
 
         //if (typeof args[0] !== 'string') throw 'name must be a string';
         // todo typecheck
 
         return {
             name: args[0],
-            ctor: args[1],
+            cls: args[1],
             args: typeof args[2] === 'function' ? args[2] : () => [],
             options: (typeof args[2] === 'object' && args[2]) || (typeof args[3] === 'object' && args[3]) || {}
         }
@@ -257,21 +258,21 @@ export class DependencyBuilderImplementation {
 
 type BindFunctionArgs = {
     name: string;
-    fn: FunctionWithReturnType<any>;
+    fn: Function<any>;
     args: (names: any) => any[];
     options: FunctionOptions
 }
 
 type BindAsyncFunctionArgs = {
     name: string;
-    fn: FunctionWithReturnType<Promise<any>>;
+    fn: Function<Promise<any>>;
     args: (names: any) => any[];
     options: AsyncFunctionOptions
 }
 
-type BindConstructorArgs = {
+type BindClassArgs = {
     name: string;
-    ctor: Constructor;
+    cls: Class<any>;
     args: (names: any) => any[];
-    options: ConstructorOptions
+    options: ClassOptions
 }

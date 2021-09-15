@@ -1,5 +1,5 @@
 import {DependencyBuilderImplementation} from "./builderImplementation";
-import {AsyncDependencyBuilder, ConstructorOptions, DependencyBuilder, FunctionOptions} from "./types";
+import {AsyncDependencyBuilder, ClassOptions, DependencyBuilder, FunctionOptions} from "./types";
 
 export function builder<T>(): DependencyBuilder<T> {
     return new DependencyBuilderImplementation(false) as any;
@@ -11,7 +11,7 @@ export function asyncBuilder<T>(): AsyncDependencyBuilder<T> {
 
 export const singleton = {
     singleton: true
-} as ConstructorOptions;
+} as ClassOptions;
 
 export const memoize = {
     memoize: true
