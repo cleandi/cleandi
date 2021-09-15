@@ -9,10 +9,6 @@ export function asyncBuilder<T>(): AsyncDependencyBuilder<T> {
     return new DependencyBuilderImplementation(true) as any;
 }
 
-export function none() {
-    return [] as const;
-}
-
 export const singleton = {
     singleton: true
 } as ConstructorOptions;

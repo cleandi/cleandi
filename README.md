@@ -13,11 +13,11 @@ The main selling points of this library are:
  - you can also use it vanilla js, although you won't get type safety
 
 ```
-import {builder, none} from 'cleandi';
+import {builder} from 'cleandi';
 
 const provider = builder<Provider>
     .bindConstructor('clock', Clock, d => [d.clockName, d.startingTime] as const)
-    .bindFunction('startingTime', getNow, none)
+    .bindFunction('startingTime', getNow)
     .bindValue('clockName', 'my-clock')
     .build('clock', 'startingTime', 'clockName');
 
@@ -49,10 +49,10 @@ Finally, with the provider you can get instances previously defined just queryin
 
 ```
 // async provider example
-import {asyncBuilder, none} from 'cleandi';
+import {asyncBuilder} from 'cleandi';
 
 const provider = asyncBuilder<Provider>
-    .bindAsyncFunction('data', logInConsole, d => [] as const)
+    .bindAsyncFunction('data', logInConsole)
     .bindValue('logger', console.log)
     .build('data', 'logger');
     

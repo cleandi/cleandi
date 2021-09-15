@@ -14,11 +14,16 @@ export type ConstructorOptions = {
 
 export type FunctionWithReturnType<T> = (...args: any) => T;
 
+export type NoArgsFunctionWithReturnType<T> = () => T;
+
 export type Constructor =
     new(...args: any[]) => any;
 
 type ConstructorWithReturnType<T> =
     new(...args: any[]) => T;
+
+type NoArgsConstructorWithReturnType<T> =
+    new() => T;
 
 type MissingKeys<T, Keys extends string> =
     {[KT in keyof T]: KT extends Keys ? never : KT}[keyof T];
@@ -45,9 +50,11 @@ export type DependencyBuilder<T> = {
 
     bindValue<K extends keyof T, V extends T[K]>(item: K, value: V): DependencyBuilder<T>;
 
+    bindFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<T[K]>>(item: K, fn: V, options?: FunctionOptions): DependencyBuilder<T>;
     bindFunction<K extends keyof T, V extends FunctionWithReturnType<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): DependencyBuilder<T>;
 
     bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): DependencyBuilder<T>;
+    bindConstructor<K extends keyof T, V extends NoArgsConstructorWithReturnType<T[K]>>(item: K, ctor: V, options?: ConstructorOptions): DependencyBuilder<T>;
 
     onRequest<K extends keyof T>(item: K, handler: (item: T[K]) => T[K]): DependencyBuilder<T>;
 
@@ -61,10 +68,13 @@ export type AsyncDependencyBuilder<T> = {
     bindAsyncValue<K extends keyof T, V extends Promise<T[K]>>(item: K, value: V): AsyncDependencyBuilder<T>;
 
     bindFunction<K extends keyof T, V extends FunctionWithReturnType<T[K]>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<T[K]>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
 
     bindAsyncFunction<K extends keyof T, V extends FunctionWithReturnType<Promise<T[K]>>>(item: K, fn: V, args: (items: T) => Readonly<Parameters<V>>, options?: FunctionOptions): AsyncDependencyBuilder<T>;
+    bindAsyncFunction<K extends keyof T, V extends NoArgsFunctionWithReturnType<Promise<T[K]>>>(item: K, fn: V, options?: FunctionOptions): AsyncDependencyBuilder<T>;
 
     bindConstructor<K extends keyof T, V extends ConstructorWithReturnType<T[K]>>(item: K, ctor: V, args: (items: T) => Readonly<ConstructorParameters<V>>, options?: ConstructorOptions): AsyncDependencyBuilder<T>;
+    bindConstructor<K extends keyof T, V extends NoArgsConstructorWithReturnType<T[K]>>(item: K, ctor: V, options?: ConstructorOptions): AsyncDependencyBuilder<T>;
 
     onRequest<K extends keyof T>(item: K, handler: (item: T[K]) => T[K]): AsyncDependencyBuilder<T>;
 

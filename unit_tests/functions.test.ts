@@ -1,4 +1,4 @@
-import {builder, memoize, none} from "../src";
+import {builder, memoize} from "../src";
 import {C0, F0, F1, F2} from "./testUtils";
 
 describe('Function provider', () => {
@@ -9,7 +9,7 @@ describe('Function provider', () => {
         }
 
         const p = builder<T>()
-            .bindFunction('a', F0, none)
+            .bindFunction('a', F0)
             .build('a');
 
         expect(p.a).toBe('F0');
@@ -21,7 +21,7 @@ describe('Function provider', () => {
             b: string;
         }
         const p = builder<T>()
-            .bindFunction('a', () => true, none)
+            .bindFunction('a', () => true)
             .bindFunction('b', F1, d => [d.a] as const)
             .build('a', 'b');
 
@@ -35,7 +35,7 @@ describe('Function provider', () => {
             c: any;
         }
         const p = builder<T>()
-            .bindFunction('a', () => true, none)
+            .bindFunction('a', () => true)
             .bindFunction('b', F1, d => [d.a] as const)
             .bindFunction('c', F2, d => [d.a, 1234] as const)
             .build('a', 'b', 'c');
@@ -49,8 +49,8 @@ describe('Function provider', () => {
         }
         const t = () => {
             const p = builder<T>()
-                .bindFunction('a', () => true, none)
-                .bindFunction('a', () => true, none)
+                .bindFunction('a', () => true)
+                .bindFunction('a', () => true)
         }
         expect(t).toThrow('a already bound');
     });
@@ -62,7 +62,7 @@ describe('Function provider', () => {
         let counter = 0;
         const count = () => counter++;
         const p = builder<T>()
-            .bindFunction('a', count, none)
+            .bindFunction('a', count)
             .build('a');
         expect(p.a).toBe(0);
         expect(p.a).toBe(1);
@@ -76,7 +76,7 @@ describe('Function provider', () => {
         let counter = 0;
         const count = () => counter++;
         const p = builder<T>()
-            .bindFunction('a', count, none, memoize)
+            .bindFunction('a', count, memoize)
             .build('a');
         expect(p.a).toBe(0);
         expect(p.a).toBe(0);
@@ -98,7 +98,7 @@ describe('Function provider', () => {
             bInstantiated = true;
         }
         const p = builder<T>()
-            .bindFunction('a', fa, none)
+            .bindFunction('a', fa)
             .bindFunction('b', fb, d => [d.a] as const)
             .build('a', 'b');
 

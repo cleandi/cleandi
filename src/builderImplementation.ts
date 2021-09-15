@@ -46,40 +46,43 @@ export class DependencyBuilderImplementation {
         return this;
     }
 
-    bindFunction(name: string, fn: FunctionWithReturnType<any>, args: (names: any) => any[], options: FunctionOptions = {}) {
+    bindFunction() {
 
-        this.throwIfNameAlreadyBound(name);
+        const args = this.getFunctionArgsOrThrow(arguments) as BindFunctionArgs;
+        this.throwIfNameAlreadyBound(args.name);
 
-        const memoize = options && options.memoize || false;
+        const memoize = args.options.memoize || false;
 
-        this.constructors[name] = new PartialFunctionDependencyConstructor(name, fn, args, memoize);
-        this.boundNames.add(name);
+        this.constructors[args.name] = new PartialFunctionDependencyConstructor(args.name, args.fn, args.args, memoize);
+        this.boundNames.add(args.name);
 
         return this;
     }
 
-    bindAsyncFunction(name: string, fn: FunctionWithReturnType<Promise<any>>, args: (names: any) => any[], options: AsyncFunctionOptions = {}) {
+    bindAsyncFunction() {
 
         this.throwIfNotInAsyncMode();
-        this.throwIfNameAlreadyBound(name);
+        const args = this.getFunctionArgsOrThrow(arguments) as BindAsyncFunctionArgs;
+        this.throwIfNameAlreadyBound(args.name);
 
-        const memoize = options && options.memoize || false;
-        const timeout = options && options.timeout || undefined;
+        const memoize = args.options.memoize || false;
+        const timeout = args.options.timeout || undefined;
 
-        this.constructors[name] = new PartialAsyncFunctionDependencyConstructor(name, fn, args, memoize, timeout);
-        this.boundNames.add(name);
+        this.constructors[args.name] = new PartialAsyncFunctionDependencyConstructor(args.name, args.fn, args.args, memoize, timeout);
+        this.boundNames.add(args.name);
 
         return this;
     }
 
-    bindConstructor(name: string, ctor: Constructor, args: (names: any) => any[], options: ConstructorOptions = {}) {
+    bindConstructor() {
 
-        this.throwIfNameAlreadyBound(name);
+        const args = this.getConstructorArgsOrThrow(arguments) as BindConstructorArgs;
+        this.throwIfNameAlreadyBound(args.name);
 
-        const singleton = options && options.singleton || false;
+        const singleton = args.options.singleton || false;
 
-        this.constructors[name] = new PartialClassDependencyConstructor(name, ctor, args, singleton);
-        this.boundNames.add(name);
+        this.constructors[args.name] = new PartialClassDependencyConstructor(args.name, args.ctor, args.args, singleton);
+        this.boundNames.add(args.name);
 
         return this;
     }
@@ -224,4 +227,51 @@ export class DependencyBuilderImplementation {
     private throwIfNotInAsyncMode() {
         if (!this.inAsyncMode) throw 'you need to use async mode';
     }
+
+    private getFunctionArgsOrThrow(args: IArguments) {
+
+        //if (typeof args[0] !== 'string') throw 'name must be a string';
+        // todo typecheck
+
+        return {
+            name: args[0],
+            fn: args[1],
+            args: typeof args[2] === 'function' ? args[2] : () => [],
+            options: (typeof args[2] === 'object' && args[2]) || (typeof args[3] === 'object' && args[3]) || {}
+        }
+    }
+
+    private getConstructorArgsOrThrow(args: IArguments) {
+
+        //if (typeof args[0] !== 'string') throw 'name must be a string';
+        // todo typecheck
+
+        return {
+            name: args[0],
+            ctor: args[1],
+            args: typeof args[2] === 'function' ? args[2] : () => [],
+            options: (typeof args[2] === 'object' && args[2]) || (typeof args[3] === 'object' && args[3]) || {}
+        }
+    }
+}
+
+type BindFunctionArgs = {
+    name: string;
+    fn: FunctionWithReturnType<any>;
+    args: (names: any) => any[];
+    options: FunctionOptions
+}
+
+type BindAsyncFunctionArgs = {
+    name: string;
+    fn: FunctionWithReturnType<Promise<any>>;
+    args: (names: any) => any[];
+    options: AsyncFunctionOptions
+}
+
+type BindConstructorArgs = {
+    name: string;
+    ctor: Constructor;
+    args: (names: any) => any[];
+    options: ConstructorOptions
 }

@@ -1,4 +1,4 @@
-import {asyncBuilder, builder, memoize, none, singleton} from "../src";
+import {asyncBuilder, builder, memoize, singleton} from "../src";
 import {C0, C1, C2, C3, F0, F1} from "./testUtils";
 
 describe('Async providers', () => {
@@ -9,7 +9,7 @@ describe('Async providers', () => {
         }
 
         const p = asyncBuilder<T>()
-            .bindConstructor('a', C0, none)
+            .bindConstructor('a', C0)
             .build('a');
 
         expect((await p.a).chain()).toBe('C0');
@@ -48,7 +48,7 @@ describe('Async providers', () => {
 
         const asyncFunc = () => Promise.resolve('abc');
         const p = asyncBuilder<T>()
-            .bindAsyncFunction('a', asyncFunc, none)
+            .bindAsyncFunction('a', asyncFunc)
             .build('a');
 
         expect(await p.a).toBe('abc');
@@ -97,8 +97,8 @@ describe('Async providers', () => {
         const asyncFunc = () => Promise.resolve(1234);
         const t = () => {
             const p = asyncBuilder<T>()
-                .bindAsyncFunction('a', asyncFunc, none)
-                .bindAsyncFunction('a', asyncFunc, none)
+                .bindAsyncFunction('a', asyncFunc)
+                .bindAsyncFunction('a', asyncFunc)
                 .build('a');
         }
         expect(t).toThrow('a already bound');
