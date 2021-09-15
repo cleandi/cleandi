@@ -28,6 +28,7 @@ export class DependencyBuilderImplementation {
 
     bindValue(name: string, value: any) {
 
+        this.throwIfNameIsBad(name);
         this.throwIfNameAlreadyBound(name);
 
         this.constructors[name] = new ValueDependencyConstructor(name, value);
@@ -39,6 +40,7 @@ export class DependencyBuilderImplementation {
     bindAsyncValue(name: string, value: Promise<any>) {
 
         this.throwIfNotInAsyncMode();
+        this.throwIfNameIsBad(name);
         this.throwIfNameAlreadyBound(name);
 
         this.constructors[name] = new AsyncValueDependencyConstructor(name, value);
@@ -229,10 +231,13 @@ export class DependencyBuilderImplementation {
         if (!this.inAsyncMode) throw 'you need to use async mode';
     }
 
+    private throwIfNameIsBad(name: string) {
+        if (typeof name !== 'string') throw 'name must be a string';
+    }
+
     private getFunctionArgsOrThrow(args: IArguments) {
 
-        //if (typeof args[0] !== 'string') throw 'name must be a string';
-        // todo typecheck
+        this.throwIfNameIsBad(args[0]);
 
         return {
             name: args[0],
@@ -244,8 +249,7 @@ export class DependencyBuilderImplementation {
 
     private getClassArgsOrThrow(args: IArguments) {
 
-        //if (typeof args[0] !== 'string') throw 'name must be a string';
-        // todo typecheck
+        this.throwIfNameIsBad(args[0]);
 
         return {
             name: args[0],
