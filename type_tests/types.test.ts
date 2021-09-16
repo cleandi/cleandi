@@ -24,16 +24,14 @@ describe('Types', () => {
         interface T {
             a: C1;
         }
-        const p = builder<T>()
-            .bindClass('a', C1, () => [] as const) // @ts-error
+        const p = builder<T>().bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed for async builder', () => {
         interface T {
             a: C1;
         }
-        const p = asyncBuilder<T>()
-            .bindClass('a', C1, () => [] as const) // @ts-error
+        const p = asyncBuilder<T>().bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('unknown constructor dependencies should not be allowed to bind', () => {
@@ -120,16 +118,14 @@ describe('Types', () => {
         interface T {
             a: C1;
         }
-        const p = builder<T>()
-            .bindClass('a', C1, () => [] as const) // @ts-error
+        const p = builder<T>().bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed for async builder', () => {
         interface T {
             a: C1;
         }
-        const p = asyncBuilder<T>()
-            .bindClass('a', C1, () => [] as const) // @ts-error
+        const p = asyncBuilder<T>().bindClass('a', C1, () => [] as const) // @ts-error
     });
 
     it ('an invalid list of constructors parameters should not be allowed', () => {
@@ -175,7 +171,7 @@ describe('Types', () => {
 
         const p = builder<T>()
             .bindValue('a', 1)
-            .map('b', item => item)  // @ts-error
+            .onRequest('b', item => item)  // @ts-error
             .build('a');
     });
 
@@ -186,7 +182,7 @@ describe('Types', () => {
 
         const p = builder<T>()
             .bindValue('a', 1)
-            .map('a', item => true)  // @ts-error
+            .onRequest('a', item => true)  // @ts-error
             .build('a');
     });
 

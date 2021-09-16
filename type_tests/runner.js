@@ -36,7 +36,7 @@ function getErrors(file) {
 
         const tag = getTagMetadata(error.file.text, error.start);
 
-        if (tag == null) throw `${file} contains unexpected errors: ${error.messageText}`;
+        if (tag == null) throw `${file} contains unexpected errors: ${JSON.stringify(error.messageText)}`;
 
         if (tag.comment) {
             console.log(file)
