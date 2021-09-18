@@ -109,7 +109,7 @@ export class DependencyBuilderImplementation {
         const allKeys = this.getKeysOrThrow(key, keys);
         this.throwIfDuplicated(allKeys);
         this.throwIfMissingBindings(allKeys);
-        this.throwIfUnknownMappers();
+        this.throwIfUnknownMiddleware();
 
         this.resolvePartialConstructorsOrThrow();
 
@@ -217,7 +217,7 @@ export class DependencyBuilderImplementation {
         if (missingBindings.length > 1) throw `${missingBindings.join(', ')} bindings are not defined.`;
     }
 
-    private throwIfUnknownMappers() {
+    private throwIfUnknownMiddleware() {
         Object.keys(this.onRequestMiddleware).forEach(name => {
             if (!this.boundNames.has(name)) throw `${name} mapper is unknown`;
         });
