@@ -16,7 +16,7 @@ The main selling points of this library are:
 import {builder} from 'cleandi';
 
 const provider = builder<Provider>
-    .bindConstructor('clock', Clock, d => [d.clockName, d.startingTime] as const)
+    .bindClass('clock', Clock, d => [d.clockName, d.startingTime] as const)
     .bindFunction('startingTime', getNow)
     .bindValue('clockName', 'my-clock')
     .build('clock', 'startingTime', 'clockName');

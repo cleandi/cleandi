@@ -1,6 +1,6 @@
 {
   "name": "cleandi",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Type safe and clean dependency injector",
   "main": "./dist/index.js",
   "exports": {
