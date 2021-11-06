@@ -1,7 +1,15 @@
 {
   "name": "cleandi",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "Type safe and clean dependency injector",
+  "keywords": [
+    "di",
+    "dependency injection",
+    "dependency container",
+    "IoC",
+    "inversion of control",
+    "IoC container"
+  ],
   "main": "./dist/index.js",
   "exports": {
     ".": {
