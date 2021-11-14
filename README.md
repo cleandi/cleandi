@@ -12,7 +12,7 @@ The main selling points of this library are:
  - can work in async fashion too
  - you can also use it vanilla js, although you won't get type safety
 
-```
+```ts
 import {builder} from 'cleandi';
 
 const provider = builder<Provider>
@@ -47,7 +47,7 @@ There are bindings for class constructors, functions and values. On each of them
 Then, you call `build` specifying all the `T` fields to create the dependency provider. This step is a tradeoff necessary to check if the types where defined in runtime.
 Finally, with the provider you can get instances previously defined just querying by it's name.
 
-```
+```ts
 // async provider example
 import {asyncBuilder} from 'cleandi';
 
